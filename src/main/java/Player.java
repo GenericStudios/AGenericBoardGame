@@ -1,5 +1,5 @@
 public class Player {
-    private final int id;
+    final int id;
 
     public Player(int myID) {
         this.id = myID;

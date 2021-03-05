@@ -1,6 +1,11 @@
 Dice.class
 Main.class
-Card.class
-Animal.class
+BoardSpace.class
+AnimalBoardSpace.class
 Board.class
+Enums$OtherBoardSpaceTypes.class
+Enums.class
+OtherBoardSpace.class
 Player.class
+Enums$BoardSpaceTypes.class
+Card.class
