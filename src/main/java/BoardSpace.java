@@ -12,7 +12,4 @@ public abstract class BoardSpace {
         System.out.println("ID: " + this.id + " type: " + this.type);
     }
 
-    public int getID() { return this.id; }
-    public Enums.BoardSpaceTypes getType() { return this.type; }
-
 }

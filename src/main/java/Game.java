@@ -24,6 +24,23 @@ public class Game {
             for (int pIndex = 0; pIndex < playerCount; pIndex++) {
                 Player currentPlayer = players[pIndex];
                 System.out.println(currentPlayer.getID());
+
+                int oldPos = currentPlayer.getBoardPosition();
+
+                // TODO: let player decide what to do
+
+                int roll = dice.roll();
+                int newPos = currentPlayer.moveGetPosition(roll);
+
+                if (newPos < oldPos) {
+                    if (newPos == 0) {
+                        currentPlayer.adjustMoney(1000);
+                    } else {
+                        currentPlayer.adjustMoney(500);
+                    }
+                }
+
+
             }
             gameLoops++;
             break;
