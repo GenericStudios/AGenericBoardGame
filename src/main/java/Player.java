@@ -4,6 +4,7 @@ import java.util.List;
 public class Player {
     final int id;
     int money = 0;
+    int boardPosition = 0;
     List<AnimalBoardSpace> animals = new ArrayList<AnimalBoardSpace>();
 
     public Player(int myID) {
@@ -18,6 +19,19 @@ public class Player {
         this.money -= animal.getCurrentStopPrice();
         this.animals.add(animal);
         animal.setOwner(this);
+    }
+
+    public int getBoardPosition() {
+        return this.boardPosition;
+    }
+
+    public int moveGetPosition(int amount) {
+        int newPosition = this.boardPosition + amount;
+        if (newPosition >= 26) {
+            newPosition -= 26;
+        }
+        this.boardPosition = newPosition;
+        return newPosition;
     }
 
     public int adjustMoney(int amount) {

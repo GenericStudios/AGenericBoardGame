@@ -1,27 +1,34 @@
 public class Game {
+
+    Player[] players;
+    Dice dice = new Dice();
+    Board board = new Board();
+
     public Game() {
         // Initialize the game
 
-        // Initialize Objects
         // TODO: Ask user how many players, for now we'll do 3
+        this.players = new Player[3];
 
-        // This creates placeholders for the player but doesn't initialize them or give them any values
-        Player[] players = new Player[3];
-
-        for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(i + 1);
-            System.out.println(players[i].getID());
+        for (int i = 0; i < this.players.length; i++) {
+            this.players[i] = new Player(i);
         }
-
-        // Create dice
-        Dice dice = new Dice();
-
-        // Setup board
-        Board board = new Board();
     }
 
     public void start() {
         // Start the game
+        int gameLoops = 0;
+        int playerCount = players.length;
+
+        while (true) {
+            for (int pIndex = 0; pIndex < playerCount; pIndex++) {
+                Player currentPlayer = players[pIndex];
+                System.out.println(currentPlayer.getID());
+            }
+            gameLoops++;
+            break;
+        }
+
     }
 
 }
