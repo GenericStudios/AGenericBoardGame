@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Board {
 
     // Initialize attributes
@@ -15,16 +17,23 @@ public class Board {
             14-25: 14-25
         */
 
+        Random animalGenerator = new Random();
+        int animalGeneratorLength = Animals.animalsArray.length;
+
         for (int i = 0; i < 26; i++) {
+
             BoardSpace space;
+            int randomIndex = animalGenerator.nextInt(animalGeneratorLength);
+            AnimalTemplate animal = Animals.animalsArray[randomIndex];
+
             if (i == 0) { // Start Space
                 space = new OtherBoardSpace(i, Enums.OtherBoardSpaceTypes.start);
             } else if (i <= 12) { // 1 to 12
-                space = new AnimalBoardSpace(i);
+                space = new AnimalBoardSpace(i, animal);
             } else if (i == 13) { // Miss a turn Space
                 space = new OtherBoardSpace(i, Enums.OtherBoardSpaceTypes.missTurn);
             } else { // 14 to 25
-                space = new AnimalBoardSpace(i);
+                space = new AnimalBoardSpace(i, animal);
             }
             boardSpaces[i] = space;
         }
