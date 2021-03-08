@@ -4,8 +4,8 @@ public class Board {
 
     // Initialize attributes
 
-    Card[] cards = new Card[20];
-    BoardSpace[] boardSpaces = new BoardSpace[26];
+    private Card[] cards = new Card[20];
+    private BoardSpace[] boardSpaces = new BoardSpace[26];
 
     public Board() {
         // Build Board Spaces
@@ -49,6 +49,10 @@ public class Board {
             boardSpaces[i].debugSpace();
         }
 
+    }
+
+    public BoardSpace getBoardSpace(int pos) {
+        return this.boardSpaces[pos];
     }
 
 }
