@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class Board {
@@ -41,7 +43,7 @@ public class Board {
         // Setup Cards
 
         for (int i = 0; i < 20; i++) {
-            cards[i] = new Card(Enums.CardAbility.lose100);
+            cards[i] = new Card(i, Enums.CardAbility.lose100);
         }
 
         // Debug Setup
@@ -53,6 +55,13 @@ public class Board {
 
     public BoardSpace getBoardSpace(int pos) {
         return this.boardSpaces[pos];
+    }
+
+    public Card getTopCard() {
+        Card top = this.cards[0];
+        Collections.rotate(Arrays.asList(this.cards), -1);
+
+        return top;
     }
 
 }

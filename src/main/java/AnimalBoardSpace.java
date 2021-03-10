@@ -23,7 +23,7 @@ public class AnimalBoardSpace extends BoardSpace {
         System.out.println("");
         System.out.println("Animal " + this.getID());
         System.out.println("===");
-        System.out.println("Name:" + this.name);
+        System.out.println("Name: " + this.name);
         String upgradeStage;
         if (this.stage == 0) {
             upgradeStage = "None";
@@ -36,7 +36,7 @@ public class AnimalBoardSpace extends BoardSpace {
             if (i == 0) {
                 prefix = "No upgrade price: ";
             } else {
-                prefix = "Upgrade " + String.valueOf(this.stage) + " price: ";
+                prefix = "Upgrade " + String.valueOf(i) + " price: ";
             }
             if (i == this.stage) {
                 prefix = "-> " + prefix;

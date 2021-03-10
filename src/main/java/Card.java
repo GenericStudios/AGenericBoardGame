@@ -1,8 +1,10 @@
 public class Card {
 
+    private int id;
     private Enums.CardAbility ability;
 
-    public Card(Enums.CardAbility myAbility) {
+    public Card(int myID, Enums.CardAbility myAbility) {
+        this.id = myID;
         this.ability = myAbility;
     }
 
@@ -10,4 +12,7 @@ public class Card {
         return this.ability;
     }
 
+    public int getID() {
+        return this.id;
+    }
 }

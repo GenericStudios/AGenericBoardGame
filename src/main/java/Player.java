@@ -13,11 +13,11 @@ public class Player {
     }
 
     public boolean canPurchase(AnimalBoardSpace animal) {
-        return this.money >= animal.getCurrentStopPrice();
+        return this.money >= animal.getPurchasePrice();
     }
 
     public void purchase(AnimalBoardSpace animal) {
-        this.money -= animal.getCurrentStopPrice();
+        this.money -= animal.getPurchasePrice();
         this.animals.add(animal);
         animal.setOwner(this);
     }
@@ -73,6 +73,7 @@ public class Player {
     }
 
     public boolean canUpgrade(AnimalBoardSpace animal) {
+        // TODO: Fix being able to upgrade animal too far
         return (animal.getStage() < animal.getStopPrices().length && this.money >= animal.getPurchasePrice());
     }
 }
