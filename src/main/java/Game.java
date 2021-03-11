@@ -16,17 +16,21 @@ public class Game {
         System.out.println("How many players do you want?");
         String input;
         int playerNumber = 0;
+        double playerFloat = 0;
         while (true) {
             input = scanner.nextLine();
-            try {
-                playerNumber = Integer.parseInt(input);
+            playerFloat = Double.parseDouble(input);
+            playerNumber = (int)(Math.round(playerFloat));
+            if (playerFloat == playerNumber) { // Make sure it's whole
+                System.out.println("Please enter a whole number.");
+            }
+            else {
                 if (playerNumber >= 2 && playerNumber <= 4) {
                     break;
-                } else {
+                }
+                else {
                     System.out.println("That's out of range, it needs to be between 2 and 4.");
                 }
-            } catch (NumberFormatException ex) {
-                System.out.println("Please enter a full number between 2 and 4.");
             }
         }
 
