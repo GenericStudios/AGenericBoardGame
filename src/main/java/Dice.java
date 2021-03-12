@@ -1,5 +1,9 @@
 public class Dice {
+    private  int rollSingle() {
+        return (int)((Math.random() * 6) + 1);
+    }
+
     public int roll() {
-        return (int) (Math.random() * (7)) + (int) (Math.random() * (7));
+        return rollSingle() + rollSingle();
     }
 }
