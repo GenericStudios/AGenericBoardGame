@@ -9,5 +9,8 @@
         <module name="AGenericBoardGame" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AGenericBoardGame" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
