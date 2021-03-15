@@ -13,9 +13,6 @@ public class Game {
     public Game() {
         // Initialize the game
 
-        System.out.println("A");
-        System.out.println((int)8.6);
-
         System.out.println("How many players do you want?");
         String input;
         int playerNumber = 0;
