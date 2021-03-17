@@ -201,6 +201,8 @@ public class Game {
                         Enums.CardAbility cardAbility = card.getAbility();
                         System.out.println("You drew a " + cardAbility + " card.");
 
+                        // TODO: Add other abilities
+
                         if (cardAbility == Enums.CardAbility.lose100) {
                             System.out.println("You lose 100.");
                             currentPlayer.adjustMoney(-100);
