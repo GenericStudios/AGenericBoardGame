@@ -1,3 +1,5 @@
+import com.sun.tools.javac.util.StringUtils;
+
 import javax.print.attribute.standard.MediaSize;
 import java.util.Locale;
 import java.util.Scanner;
@@ -19,18 +21,23 @@ public class Game {
         double playerFloat = 0;
         while (true) {
             input = scanner.nextLine();
-            playerFloat = Double.parseDouble(input);
-            playerNumber = (int)(Math.round(playerFloat));
-            if (playerFloat == playerNumber) { // Make sure it's whole
-                System.out.println("Please enter a whole number.");
-            }
-            else {
-                if (playerNumber >= 2 && playerNumber <= 4) {
-                    break;
+            if (isNumber(input)) {
+                playerFloat = Double.parseDouble(input);
+                playerNumber = (int)(Math.round(playerFloat));
+                if (playerFloat == playerNumber) { // Make sure it's whole
+                    if (playerNumber >= 2 && playerNumber <= 4) {
+                        break;
+                    }
+                    else {
+                        System.out.println("That's out of range, it needs to be between 2 and 4.");
+                    }
                 }
                 else {
-                    System.out.println("That's out of range, it needs to be between 2 and 4.");
+                    System.out.println("Please enter a whole number.");
                 }
+            }
+            else {
+                System.out.println("Please enter a number.");
             }
         }
 
@@ -51,6 +58,26 @@ public class Game {
             }
             System.out.println("That's invalid, please enter either \"y\", \"n\", \"yes\" or \"no\".");
         }
+    }
+    public boolean isNumber(String number) { // Had to implement this method myself because it's apparently easier than attempting to import it from a library
+        String numbers = "0123456789";
+
+        boolean dot = false;
+        int length = number.length();
+        for (int i = 0; i < length; i++) {
+            char character = number.charAt(i);
+            if (numbers.indexOf(character) == -1) {
+                if (character == '.' && (! dot)) {
+                    dot = true;
+                }
+                else {
+                    if (i != 0 || character != '-') {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public void start() {
