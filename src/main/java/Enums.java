@@ -11,7 +11,8 @@ public class Enums {
     };
 
     public enum CardAbility {
-        lose100 // The card makes you lose 100 gens/money
+        lose100, // The card makes you lose 100 gens/money
+        gain50
     }
 
 }

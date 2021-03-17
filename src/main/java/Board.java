@@ -19,14 +19,14 @@ public class Board {
             14-25: 14-25
         */
 
-        Random animalGenerator = new Random();
+        Random randGenerator = new Random();
         int animalGeneratorLength = Animals.animalsArray.length;
 
         for (int i = 0; i < 26; i++) {
 
             BoardSpace space;
-            int randomIndex = animalGenerator.nextInt(animalGeneratorLength);
-            AnimalTemplate animal = Animals.animalsArray[randomIndex];
+            int animalRandomIndex = randGenerator.nextInt(animalGeneratorLength);
+            AnimalTemplate animal = Animals.animalsArray[animalRandomIndex];
 
             if (i == 0) { // Start Space
                 space = new OtherBoardSpace(i, Enums.OtherBoardSpaceTypes.start);
@@ -42,8 +42,13 @@ public class Board {
 
         // Setup Cards
 
+        Enums.CardAbility[] randomCardAbilities = Enums.CardAbility.values();
+        int randomCardsLength = randomCardAbilities.length;
+
         for (int i = 0; i < 20; i++) {
-            cards[i] = new Card(i, Enums.CardAbility.lose100);
+            int cardsRandomIndex = randGenerator.nextInt(randomCardsLength);
+            Enums.CardAbility cardAbility = randomCardAbilities[cardsRandomIndex];
+            cards[i] = new Card(i, cardAbility);
         }
 
         // Debug Setup
