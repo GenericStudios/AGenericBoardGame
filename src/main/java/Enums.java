@@ -12,7 +12,10 @@ public class Enums {
 
     public enum CardAbility {
         lose100, // The card makes you lose 100 gens/money
-        gain50
-    }
+        gain100, // Gain 100
+        notStonks, // Lose 1,000
+        stonks, // Gain 5,000
+        steal300 // Steal 300 from another player
+    };
 
 }

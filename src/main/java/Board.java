@@ -7,6 +7,7 @@ public class Board {
     // Initialize attributes
 
     private Card[] cards = new Card[20];
+    private int[] cardCounts = {7, 8, 1, 1, 3};
     private BoardSpace[] boardSpaces = new BoardSpace[26];
 
     public Board() {
@@ -45,8 +46,16 @@ public class Board {
         Enums.CardAbility[] randomCardAbilities = Enums.CardAbility.values();
         int randomCardsLength = randomCardAbilities.length;
 
+        int cardCounts[] = new int[randomCardsLength];
         for (int i = 0; i < 20; i++) {
-            int cardsRandomIndex = randGenerator.nextInt(randomCardsLength);
+            int cardsRandomIndex;
+            while (true) {
+                cardsRandomIndex = randGenerator.nextInt(randomCardsLength);
+                if (cardCounts[cardsRandomIndex] < this.cardCounts[cardsRandomIndex]) {
+                    break;
+                }
+            }
+
             Enums.CardAbility cardAbility = randomCardAbilities[cardsRandomIndex];
             cards[i] = new Card(i, cardAbility);
         }

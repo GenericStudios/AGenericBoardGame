@@ -46,10 +46,11 @@ public class Player {
                 System.out.println("You lose.");
             }
             else {
-                System.out.println("Player + " + (currentPlayer.getID() + 1) + " ran out of money!");
+                System.out.println("Player " + (this.getID() + 1) + " ran out of money!");
                 System.out.println("They're now out of the game.");
             }
             game.removePlayer(this);
+            game.playersLeft--;
         }
         return this.money;
     }
