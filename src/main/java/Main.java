@@ -1,6 +1,6 @@
 public class Main {
     // Or here
-    public static void main(String[] args) {
+    public void main(String[] args) {
 
         // while the user still wants to play, create a new game object every time
         Game game = new Game();

@@ -4,6 +4,8 @@ import javax.print.attribute.standard.MediaSize;
 import java.util.Locale;
 import java.util.Scanner;
 
+// TODO: prevent player from buying/upgrading when money afterwards would be 0
+
 public class Game {
 
     private Player[] players;
@@ -11,6 +13,8 @@ public class Game {
     private Dice dice = new Dice();
     private Board board = new Board();
     private Scanner scanner = new Scanner(System.in);
+
+    public Player currentPlayer;
 
     public Game() {
         // Initialize the game
@@ -45,7 +49,7 @@ public class Game {
         this.playerCount = playerNumber;
 
         for (int i = 0; i < playerNumber; i++) {
-            this.players[i] = new Player(i);
+            this.players[i] = new Player(i, this);
         }
     }
 
@@ -87,6 +91,11 @@ public class Game {
         while (true) {
             for (int pIndex = 0; pIndex < this.playerCount; pIndex++) {
                 Player currentPlayer = players[pIndex];
+                this.currentPlayer = currentPlayer;
+                if (currentPlayer == null) {
+                    continue;
+                }
+
                 System.out.println("");
                 System.out.println("====================");
                 System.out.println("");
@@ -133,15 +142,17 @@ public class Game {
                     if (choice == 0) {
                         AnimalBoardSpace[] playerAnimals = currentPlayer.getAnimals();
 
-                        System.out.println("Your animals:");
-                        System.out.println("---");
-
-                        for (int i = 0; i < playerAnimals.length; i++) {
-                            AnimalBoardSpace animal = playerAnimals[i];
-                            System.out.println("Animal " + animal.getID() + " (" + playerAnimals[i].getName() + ")");
+                        if (playerAnimals.length == 0) {
+                            System.out.println("You don't have any animals.");
                         }
+                        else {
+                            System.out.println("Your animals:");
 
-                        System.out.println("---");
+                            for (int i = 0; i < playerAnimals.length; i++) {
+                                AnimalBoardSpace animal = playerAnimals[i];
+                                System.out.println(" * Animal " + animal.getID() + " (" + playerAnimals[i].getName() + ")");
+                            }
+                        }
                     } else if (choice == 1) {
                         // Role Dice and Move
                         int roll = dice.roll();
@@ -211,7 +222,7 @@ public class Game {
                             } else {
                                 // Pay owner
                                 int price = animal.getCurrentStopPrice();
-                                currentPlayer.payPlayer(owner, price);
+                                currentPlayer.payPlayer(owner, price, currentPlayer);
                                 System.out.println("You landed on player " + (owner.getID() + 1) + "'s " + animalName + " and paid " + price + ". You now have " + currentPlayer.getMoney() + " money.");
                             }
                         } else {
@@ -226,18 +237,25 @@ public class Game {
                         // Draw card
                         Card card = board.getTopCard();
                         Enums.CardAbility cardAbility = card.getAbility();
-                        System.out.println("You drew a " + cardAbility + " card.");
 
                         // TODO: Add other abilities
 
                         if (cardAbility == Enums.CardAbility.lose100) {
-                            System.out.println("You lose 100.");
+                            System.out.println("You drew a lose 100 card.");
+                            System.out.println("You lost 100 money.");
                             currentPlayer.adjustMoney(-100);
+                        }
+                        else {
+                            System.out.println("Error: unknown card.");
                         }
                     }
                 }
             }
             gameLoops++;
         }
+    }
+
+    public void removePlayer(Player player) { // TODO: what else needs to be removed?
+        this.players[player.getID()] = null;
     }
 }

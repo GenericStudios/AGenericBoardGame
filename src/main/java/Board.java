@@ -51,11 +51,6 @@ public class Board {
             cards[i] = new Card(i, cardAbility);
         }
 
-        // Debug Setup
-        for (int i = 0; i < boardSpaces.length; i++) {
-            boardSpaces[i].debugSpace();
-        }
-
     }
 
     public BoardSpace getBoardSpace(int pos) {

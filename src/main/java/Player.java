@@ -3,13 +3,15 @@ import java.util.List;
 
 public class Player {
     private final int id;
+    private final Game game;
     private int money = 100;
     private int boardPosition = 0;
     private boolean missNextTurn = false;
     private List<AnimalBoardSpace> animals = new ArrayList<AnimalBoardSpace>();
 
-    public Player(int myID) {
+    public Player(int myID, Game game) {
         this.id = myID;
+        this.game = game;
     }
 
     public boolean canPurchase(AnimalBoardSpace animal) {
@@ -36,11 +38,23 @@ public class Player {
     }
 
     public int adjustMoney(int amount) {
+        Player currentPlayer = this.game.currentPlayer;
         this.money += amount;
+        if (this.money <= 0) {
+            if (this.getID() == currentPlayer.getID()) {
+                System.out.println("You ran out of money!");
+                System.out.println("You lose.");
+            }
+            else {
+                System.out.println("Player + " + (currentPlayer.getID() + 1) + " ran out of money!");
+                System.out.println("They're now out of the game.");
+            }
+            game.removePlayer(this);
+        }
         return this.money;
     }
 
-    public void payPlayer(Player otherPlayer, int amount) {
+    public void payPlayer(Player otherPlayer, int amount, Player currentPlayer) {
         otherPlayer.adjustMoney(amount);
         this.adjustMoney(-amount);
     }
