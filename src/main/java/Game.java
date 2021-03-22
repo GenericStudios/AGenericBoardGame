@@ -208,7 +208,7 @@ public class Game {
                                         animal.printStats();
                                     }
                                 } else {
-                                    System.out.println("You cannot afford this animal. You need " + (animal.getPurchasePrice() - currentPlayer.getMoney()) + " more money. (You have " + currentPlayer.getMoney() + ").");
+                                    System.out.println("You cannot afford this animal. You need " + ((animal.getPurchasePrice() - currentPlayer.getMoney()) + 1) + " more money. (You have " + currentPlayer.getMoney() + ").");
                                 }
                             } else if (owner == currentPlayer) {
                                 // Check if can upgrade
