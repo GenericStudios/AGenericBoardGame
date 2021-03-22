@@ -117,7 +117,11 @@ public class Game {
                     System.out.println("You missed your turn.");
                 }
 
+                Boolean drawnCard = false;
                 while (! turnEnded) {
+                    if (gameOver) {
+                        break;
+                    }
                     int oldPos = currentPlayer.getBoardPosition();
 
                     System.out.println("");
@@ -242,106 +246,111 @@ public class Game {
 
                         turnEnded = true;
                     } else {
-                        // Draw card
-                        Card card = board.getTopCard();
-                        Enums.CardAbility cardAbility = card.getAbility();
+                        if (drawnCard) {
+                            System.out.println("You've already drawn a card this turn.");
+                        }
+                        else {
+                            drawnCard = true;
 
-                        // TODO: Add other abilities
+                            // Draw card
+                            Card card = board.getTopCard();
+                            Enums.CardAbility cardAbility = card.getAbility();
 
-                        if (cardAbility == Enums.CardAbility.lose100) {
-                            System.out.println("You drew a lose 100 card.");
-                            System.out.println("You lost 100 money.");
-                            currentPlayer.adjustMoney(-100);
-                        }
-                        else if (cardAbility == Enums.CardAbility.gain100) {
-                            System.out.println("You drew a gain 100 card!");
-                            System.out.println("You got 100 money!");
-                            currentPlayer.adjustMoney(100);
-                        }
-                        else if (cardAbility == Enums.CardAbility.notStonks) {
-                            System.out.println("You drew a not stonks card.");
-                            System.out.println("You lost 1000 money.");
-                            currentPlayer.adjustMoney(-1000);
-                            System.out.println("(Not stonks)");
-                        }
-                        else if (cardAbility == Enums.CardAbility.stonks) {
-                            System.out.println("You drew a stonks card!");
-                            System.out.println("You gained 5000 money!");
-                            currentPlayer.adjustMoney(5000);
-                            System.out.println("STONKS!");
-                        }
-                        else if (cardAbility == Enums.CardAbility.steal300) {
-                            System.out.println("You drew a steal 300 card!");
-                            if (playersLeft == 2) {
-                                int otherPlayerID;
-                                for (otherPlayerID = 0; otherPlayerID < playerCount; otherPlayerID++) {
-                                    if (players[otherPlayerID] != null && otherPlayerID != currentPlayer.getID()) {
-                                        break;
+                            if (cardAbility == Enums.CardAbility.lose100) {
+                                System.out.println("You drew a lose 100 card.");
+                                System.out.println("You lost 100 money.");
+                                currentPlayer.adjustMoney(-100);
+                            }
+                            else if (cardAbility == Enums.CardAbility.gain100) {
+                                System.out.println("You drew a gain 100 card!");
+                                System.out.println("You got 100 money!");
+                                currentPlayer.adjustMoney(100);
+                            }
+                            else if (cardAbility == Enums.CardAbility.notStonks) {
+                                System.out.println("You drew a not stonks card.");
+                                System.out.println("You lost 1000 money.");
+                                currentPlayer.adjustMoney(-1000);
+                                System.out.println("(Not stonks)");
+                            }
+                            else if (cardAbility == Enums.CardAbility.stonks) {
+                                System.out.println("You drew a stonks card!");
+                                System.out.println("You gained 5000 money!");
+                                currentPlayer.adjustMoney(5000);
+                                System.out.println("STONKS!");
+                            }
+                            else if (cardAbility == Enums.CardAbility.steal300) {
+                                System.out.println("You drew a steal 300 card!");
+                                if (playersLeft == 2) {
+                                    int otherPlayerID;
+                                    for (otherPlayerID = 0; otherPlayerID < playerCount; otherPlayerID++) {
+                                        if (players[otherPlayerID] != null && otherPlayerID != currentPlayer.getID()) {
+                                            break;
+                                        }
                                     }
-                                }
-                                Player otherPlayer = players[otherPlayerID];
-                                // The divide by 2 is so that you only get half of what they had left if they don't have more than 300
-                                if (otherPlayer.getMoney() <= 300) {
-                                    System.out.println("You stole the rest of player " + (otherPlayerID + 1) + "'s money. You gained " + (Math.min(otherPlayer.getMoney(), 600) / 2) + " money.");
+                                    Player otherPlayer = players[otherPlayerID];
+                                    // The divide by 2 is so that you only get half of what they had left if they don't have more than 300
+                                    if (otherPlayer.getMoney() <= 300) {
+                                        System.out.println("You stole the rest of player " + (otherPlayerID + 1) + "'s money. You gained " + (Math.min(otherPlayer.getMoney(), 600) / 2) + " money.");
+                                    }
+                                    else {
+                                        System.out.println("You stole 300 from player " + (otherPlayerID + 1) + ".");
+                                    }
+                                    currentPlayer.adjustMoney((Math.min(otherPlayer.getMoney(), 600) / 2));
+                                    otherPlayer.adjustMoney(-Math.min(otherPlayer.getMoney(), 300));
                                 }
                                 else {
-                                    System.out.println("You stole 300 from player " + (otherPlayerID + 1) + ".");
-                                }
-                                currentPlayer.adjustMoney((Math.min(otherPlayer.getMoney(), 600) / 2));
-                                otherPlayer.adjustMoney(-Math.min(otherPlayer.getMoney(), 300));
-                            }
-                            else {
-                                System.out.println("As there's more than 2 players left, you get to choose who to steal from.");
-                                System.out.println("Stealing from a player with 300 or less will make them lose, but you will only get half of what they had left.");
-                                System.out.println("Who do you want to steal from?");
-                                ArrayList<Integer> options = new ArrayList<Integer>();
-                                int otherPlayerID;
-                                for (otherPlayerID = 0; otherPlayerID < playerCount; otherPlayerID++) {
-                                    if (players[otherPlayerID] != null && otherPlayerID != currentPlayer.getID()) {
-                                        options.add(otherPlayerID);
-                                        System.out.println(" * Player " + (otherPlayerID + 1) + " with " + players[otherPlayerID].getMoney() + " money");
+                                    System.out.println("As there's more than 2 players left, you get to choose who to steal from.");
+                                    System.out.println("Stealing from a player with 300 or less will make them lose, but you will only get half of what they had left.");
+                                    System.out.println("Who do you want to steal from?");
+                                    ArrayList<Integer> options = new ArrayList<Integer>();
+                                    int otherPlayerID;
+                                    for (otherPlayerID = 0; otherPlayerID < playerCount; otherPlayerID++) {
+                                        if (players[otherPlayerID] != null && otherPlayerID != currentPlayer.getID()) {
+                                            options.add(otherPlayerID);
+                                            System.out.println(" * Player " + (otherPlayerID + 1) + " with " + players[otherPlayerID].getMoney() + " money");
+                                        }
                                     }
-                                }
 
-                                int inputNumber;
-                                while (true) {
-                                    String words[] = scanner.nextLine().split(" ");
-                                    String input = words[words.length - 1];
-                                    if (isNumber(input)) {
-                                        double inputDouble = Double.parseDouble(input);
-                                        inputNumber = (int)(Math.round(inputDouble));
-                                        if (inputNumber == inputDouble) { // Make sure it's whole
-                                            inputNumber--;
-                                            if (options.contains(inputNumber)) {
-                                                break;
+                                    int inputNumber;
+                                    while (true) {
+                                        String words[] = scanner.nextLine().split(" ");
+                                        String input = words[words.length - 1];
+                                        if (isNumber(input)) {
+                                            double inputDouble = Double.parseDouble(input);
+                                            inputNumber = (int)(Math.round(inputDouble));
+                                            if (inputNumber == inputDouble) { // Make sure it's whole
+                                                inputNumber--;
+                                                if (options.contains(inputNumber)) {
+                                                    break;
+                                                }
+                                                else {
+                                                    System.out.println("That's not an option.");
+                                                }
                                             }
                                             else {
-                                                System.out.println("That's not an option.");
+                                                System.out.println("That's not a whole number.");
                                             }
                                         }
                                         else {
-                                            System.out.println("That's not a whole number.");
+                                            System.out.println("That's not a number.");
                                         }
                                     }
-                                    else {
-                                        System.out.println("That's not a number.");
-                                    }
-                                }
 
-                                Player otherPlayer = players[inputNumber];
-                                // The divide by 2 is so that you only get half of what they had left if they don't have more than 300
-                                if (otherPlayer.getMoney() <= 300) {
-                                    System.out.println("You stole the rest of player " + (inputNumber + 1) + "'s money. You gained " + (Math.min(otherPlayer.getMoney(), 600) / 2) + " money.");
+                                    Player otherPlayer = players[inputNumber];
+                                    // The divide by 2 is so that you only get half of what they had left if they don't have more than 300
+                                    if (otherPlayer.getMoney() <= 300) {
+                                        System.out.println("You stole the rest of player " + (inputNumber + 1) + "'s money. You gained " + (Math.min(otherPlayer.getMoney(), 600) / 2) + " money.");
+                                    }
+                                    else {
+                                        System.out.println("You stole 300 from player " + (inputNumber + 1) + ".");
+                                    }
+                                    currentPlayer.adjustMoney((Math.min(otherPlayer.getMoney(), 600) / 2));
+                                    otherPlayer.adjustMoney(-Math.min(otherPlayer.getMoney(), 300));
                                 }
-                                else {
-                                    System.out.println("You stole 300 from player " + (inputNumber + 1) + ".");
-                                }
-                                currentPlayer.adjustMoney((Math.min(otherPlayer.getMoney(), 600) / 2));
-                                otherPlayer.adjustMoney(-Math.min(otherPlayer.getMoney(), 300));
                             }
-                        }
-                        else {
-                            System.out.println("Error: unknown card.");
+                            else {
+                                System.out.println("Error: unknown card.");
+                            }
                         }
                     }
 
@@ -370,7 +379,7 @@ public class Game {
         }
     }
 
-    public void removePlayer(Player player) { // TODO: what else needs to be removed?
+    public void removePlayer(Player player) {
         this.players[player.getID()] = null;
     }
 }

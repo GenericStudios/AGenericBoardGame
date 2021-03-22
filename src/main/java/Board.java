@@ -52,6 +52,7 @@ public class Board {
             while (true) {
                 cardsRandomIndex = randGenerator.nextInt(randomCardsLength);
                 if (cardCounts[cardsRandomIndex] < this.cardCounts[cardsRandomIndex]) {
+                    cardCounts[cardsRandomIndex]++;
                     break;
                 }
             }
