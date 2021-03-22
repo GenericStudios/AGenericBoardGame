@@ -6,8 +6,8 @@ public class Board {
 
     // Initialize attributes
 
-    private Card[] cards = new Card[20];
-    private int[] cardCounts = {7, 8, 1, 1, 3};
+    private Card[] cards = new Card[100];
+    private int[] cardCounts = {40, 45, 1, 1, 17};
     private BoardSpace[] boardSpaces = new BoardSpace[26];
 
     public Board() {
